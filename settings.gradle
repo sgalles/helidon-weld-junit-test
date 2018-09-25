@@ -1,0 +1,3 @@
+
+rootProject.name = 'helidon-weld-junit-test'
+enableFeaturePreview("IMPROVED_POM_SUPPORT")
