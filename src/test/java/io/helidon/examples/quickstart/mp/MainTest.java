@@ -16,6 +16,8 @@
 
 package io.helidon.examples.quickstart.mp;
 
+import java.io.IOException;
+
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.spi.CDI;
 import javax.json.JsonObject;
@@ -25,12 +27,18 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import io.helidon.microprofile.server.Server;
+import org.jboss.weld.junit5.WeldInitiator;
+import org.jboss.weld.junit5.WeldJunit5Extension;
+import org.jboss.weld.junit5.WeldSetup;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+import io.helidon.microprofile.server.Server;
+
+@ExtendWith(WeldJunit5Extension.class)
 class MainTest {
     private static Server server;
 
@@ -38,10 +46,13 @@ class MainTest {
     public static void startTheServer() throws Exception {
         server = Main.startServer();
     }
-
+    
+    @WeldSetup
+    public WeldInitiator weld = WeldInitiator.of(server.getContainer());
+    
     @Test
-    void testHelloWorld() {
-
+    void testHelloWorld() throws IOException {
+    	//server = Main.startServer();
         Client client = ClientBuilder.newClient();
 
         JsonObject jsonObject = client
