@@ -46,6 +46,9 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 @Path("/greet")
 @RequestScoped
 public class GreetResource {
+	
+	@Inject
+	private Toto toto;
 
     /**
      * The greeting message.
