@@ -48,7 +48,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 public class GreetResource {
 	
 	@Inject
-	private Toto toto;
+	private Foo toto;
 
     /**
      * The greeting message.

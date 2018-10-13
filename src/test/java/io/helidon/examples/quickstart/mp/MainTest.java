@@ -18,6 +18,7 @@ package io.helidon.examples.quickstart.mp;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.spi.CDI;
+import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -25,13 +26,20 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import io.helidon.microprofile.server.Server;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+import io.helidon.microprofile.server.Server;
+
+@ExtendWith(CDIExtension.class)
 class MainTest {
+	
+	@Inject
+	private Foo foo;
+	
     private static Server server;
 
     @BeforeAll
@@ -42,6 +50,8 @@ class MainTest {
     @Test
     void testHelloWorld() {
 
+    	 Assertions.assertEquals("foo", foo.getValue());
+    	
         Client client = ClientBuilder.newClient();
 
         JsonObject jsonObject = client
